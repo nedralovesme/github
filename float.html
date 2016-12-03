@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+        .box {
+            background-color: yellow;
+            width: 100px;
+            height: 100px;
+            margin: 20px;
+            float: left;
+        }
+
+        body {
+            background-color: gray;
+        }
+
+        #content {
+            border: 3px solid black;
+            background-color: white;
+        }
+
+        .cf:before,
+        .cf:after {
+            content: " ";
+            /* 1 */
+            display: table;
+            /* 2 */
+        }
+
+        .cf:after {
+            clear: both;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content" class="cf">
+        <div class="box"></div>
+        <div class="box" style="clear:left;background-color:red;"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+/*Using navbar top fixed, use body padding to push down to avoid overlay*/
+
+body {
+    padding-top: 50px;
+}
+
+.navbar {
+    text-transform: uppercase;
+    background-color: #D73C39;
+}
+
+.navbar li a {
+    color: #ffffff !important;
+    border-right: 2px solid #ffffff;
+    padding: 0px 15px!important;
+    /*remove the 15px top padding from the a and move to li*/
+}
+
+.navbar li {
+    padding: 15px 0px;
+    /*pad the li and not the a to shrink the border*/
+}
+
+.navbar-default {
+    border: 0px;
+}
+
+/*https://stackoverflow.com/questions/10591422/bootstrap-carousel-image-doesnt-align-properly*/
+.carousel-inner > .item > img {
+    margin: 0 auto;
+}
+
+.carousel-caption {
+    margin-top: 0px !important
+}
+
+.carousel-overlay {
+    color: #ffffff;
+    position: absolute;
+    z-index: 12;
+    top: 200px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.carousel-overlay-2 {
+    color: #ffffff;
+    position: relative;
+    z-index: 12;
+    top: 200px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.innovation{
+    background-color: #D73C39;
+    color: #ffffff;
+    text-align: center;
+    padding:30px 40px;
+}
+.impact{
+    color: #D73C39;
+    text-align: center;
+    padding:30px 40px;
+}
+.innovation > img{
+    width:200px;
+}
+.impact > img{
+    width:200px;
+}
+
+.jumbotron {
+    background-image: url("background2.png");
+    background-size: cover;
+    height: 400px;
+    width:100%;
+    text-align: center;
+    color: #ffffff;
+}
+
+@media (max-width:731px) {
+    .nav.navbar-nav.pull-right {
+        float: left !important;
+    }
+    .carousel-overlay {
+        top: 120px;
+    }
+    .carousel-overlay>h1 {
+        font-size: 30px;
+    }
+    .carousel-overlay-2 {
+        top: 120px;
+    }
+    .carousel-overlay-2>h1 {
+        font-size: 30px;
+    }
+}
