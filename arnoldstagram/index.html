@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .cf:before,
+        .cf:after {
+            content: " ";
+            /* 1 */
+            display: table;
+            /* 2 */
+        }
+
+        .cf:after {
+            clear: both;
+        }
+        /*#navlist {
+            position: relative;
+        }*/
+
+        #navlist {
+            border: 1px solid #dbdbdb;
+            background-color: gray;
+        }
+
+        #navlist li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            /*position: absolute;*/
+            top: 0;
+        }
+
+        #navlist li,
+        #navlist a {
+            display: block;
+        }
+
+        #nav-left {
+            /*position: relative;*/
+            float: left;
+        }
+
+        #nav-right {
+            /*position: relative;*/
+            float: right;
+        }
+
+        #nav-left li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            /*position: absolute;*/
+            top: 0;
+        }
+
+        #nav-right li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            /*position: absolute;*/
+            top: 0;
+            /*display: ;*/
+        }
+
+        #nav-right li,
+        #nav-right a {
+            display: inline-block;
+        }
+
+        #home {
+            background: url('imgs/sprites.png') no-repeat -177px 0;
+            width: 176px;
+            height: 35px;
+            padding-left: 24px;
+        }
+
+        #explore {
+            background: url('imgs/sprites.png') no-repeat -1px -280px;
+            width: 22px;
+            height: 22px;
+            right: 300px;
+        }
+
+        #likes {
+            background: url('imgs/sprites.png') no-repeat -182px -231px;
+            width: 22px;
+            height: 20px;
+            right: 200px;
+        }
+
+        #profile {
+            background: url('imgs/sprites.png') no-repeat -303px -182px;
+            width: 22px;
+            height: 21px;
+            right: 100px;
+        }
+
+        .search{
+            position: relative;
+        }
+
+        #search-inp{
+            background-color: white;
+            padding-left: 85px;
+            position: absolute;
+            top:0px;
+            left:0px;
+            height:25px;
+        }
+    </style>
+    <title>Arnold's Instaglam</title>
+</head>
+
+<body>
+    <div id="navlist" class="cf">
+        <ul id="nav-left" class="">
+            <li id="home"></li>
+        </ul>
+        <ul id="nav-right" class="">
+            <li id="explore"></li>
+            <li id="likes"></li>
+            <li id="profile"></li>
+        </ul>
+    </div>
+<p>dgsdfgsdfgsdf</p>
+<p>dgsdfgsdfgsdf</p>
+<p>dgsdfgsdfgsdf</p>
+<p>dgsdfgsdfgsdf</p>
+<p>dgsdfgsdfgsdf</p>
+
+    .search{
+        position: relative;
+    }
+
+    #search-inp{
+        background-color: white;
+        padding-left: 85px;
+        position: absolute;
+        top:0px;
+        left:0px;
+        height:25px;
+    }
+    <div class="search">
+        <input id="search-inp" class="profile" type="text" name="" value="" placeholder="placeholder">
+        <!-- <img class="search" /> -->
+        <div id="profile" style="position:absolute; top:5px; left:5px;"></div>
+    </div>
+
+</body>
+
+</html>
