@@ -31,6 +31,8 @@ def main():
     stop_game = False
     game_over = False
     soundPlayed = False
+    level=1
+    enemies=[monster]
     while not stop_game:
         # look through user events fired
         for event in pygame.event.get():
@@ -54,10 +56,16 @@ def main():
                     game_over=False
                     soundPlayed=False
                     monster.setInitialPosition(width, height,hero)
+                    goblin = Monster()
+                    goblin.setInitialPosition(width, height,hero)
+                    enemies.append(goblin)
         #######################################
         # PUT LOGIC TO UPDATE GAME STATE HERE #
         #######################################
-        monster.update(width,height)
+
+        for e in enemies:
+            e.update(width,height)
+
         hero.update(width,height,32)
 
         # fill background color
@@ -70,13 +78,15 @@ def main():
         ################################
         hero.render(screen)
         if not game_over:
-            monster.render(screen)
+            for e in enemies:
+                e.render(screen)
         else:
             #play sound
             if not soundPlayed:
                 sound = pygame.mixer.Sound('sounds/win.wav')
                 sound.play()
             soundPlayed = True
+            level+=1
 
         if checkCollision(monster,hero):
             game_over = True
