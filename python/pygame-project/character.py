@@ -42,7 +42,6 @@ class Hero(object):
     def changeDirection(self,speed_x,speed_y):
         self.speed_x=speed_x
         self.speed_y=speed_y
-
 class Monster(object):
     def __init__(self,x=0,y=0):
         self.x=x

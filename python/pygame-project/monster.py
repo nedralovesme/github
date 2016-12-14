@@ -55,9 +55,9 @@ def main():
                 elif event.key == pygame.K_RETURN:
                     game_over=False
                     soundPlayed=False
-                    monster.setInitialPosition(width, height,hero)
+                    monster.setInitialPosition(width, height, hero)
                     goblin = Monster()
-                    goblin.setInitialPosition(width, height,hero)
+                    goblin.setInitialPosition(width, height, hero)
                     enemies.append(goblin)
         #######################################
         # PUT LOGIC TO UPDATE GAME STATE HERE #
@@ -88,7 +88,7 @@ def main():
             soundPlayed = True
             level+=1
 
-        if checkCollision(monster,hero):
+        if not game_over and checkCollision(monster,hero):
             game_over = True
 
         # update the canvas display with the currently drawn frame

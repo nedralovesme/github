@@ -19,4 +19,4 @@ class D(B,C):
 
 d = D()
 d.foo()
-print D.__mro__
+print d.__mro__
