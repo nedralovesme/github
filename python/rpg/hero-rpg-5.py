@@ -191,9 +191,8 @@ class SuperTonic(object):
     name = 'supertonic'
 
     def apply(self, character):
-        #don't reduce to 10 if higher than 10
-        character.health = max(10,character.power)
-        print "%s's health increased to %d." % (character.name, character.health)
+        if(character.health<10):
+            character.restore()
 
 
 class Sword(object):

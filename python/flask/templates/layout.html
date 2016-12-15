@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="static/style.css">
+    {% block customstyle %}
+    {% endblock %}
+  </head>
+  <body>
+    {% block headernav %}
+      <div id="nav">
+          default navigation
+      </div>
+     {% endblock %}
+    {% block body_top %}
+      <h1>Welcome!</h1>
+    {% endblock %}
+    {% block body %}
+      <h2>Replace me with content!</h2>
+    {% endblock %}
+    <p>I am in the rest of the layout</p>
+  </body>
+</html>
