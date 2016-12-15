@@ -62,7 +62,7 @@ class Hero(Character):
     def buy(self, item):
         if (self.coins >= item.cost):
             self.coins -= item.cost
-            item.apply(hero)
+            item.apply(self)
         else:
             print "Insufficient funds"
 
