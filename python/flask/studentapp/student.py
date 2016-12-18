@@ -10,7 +10,6 @@ class Student:
         query = "SELECT id,name FROM student where id=%d"%id
         cur.execute(query)
         result_set = cur.fetchone()
-        print result_set
         self.id=id
         if not result_set is None:
             self.name=result_set[1]
