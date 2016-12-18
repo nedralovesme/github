@@ -21,7 +21,7 @@ class Student:
     def update(self):
         conn = Database.getConnection()
         cur = conn.cursor()
-        query = ("update student set name='%s' where id="%self.name,self.id)
+        query = "update student set name='%s' where id=%d"%(self.name,self.id)
         # query = ("delete from student where id=%s" % id)
         cur.execute(query)
         conn.commit()

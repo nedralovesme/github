@@ -30,13 +30,13 @@ def new_student_submit():
 
 @app.route("/update_student",methods=["POST","GET"])
 def update_student():
-    id=request.form.get('id')
+    id=request.args.get('id')
     student = Student(id)
     return  render_template("update_student.html",student=student)
 
-@app.route("/update_student_submit",methods=["GET"])
+@app.route("/update_student_submit",methods=["POST"])
 def update_student_submit():
-    id=request.args.get('id')
+    id=request.form.get('id')
     student = Student(id)
     student.name=request.form.get('name')
     student.save()

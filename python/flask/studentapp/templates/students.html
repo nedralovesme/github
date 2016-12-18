@@ -6,9 +6,9 @@
 
 {% block body %}
     <h1>{{title}}</h1>
-    <ul>
+    <ul class="list-group">
       {% for student in student_list %}
-      <li><a href="/update_student?id={{student.id}}">{{student.name}}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - <a href="/delete_student?id={{student.id}}">Delete</a></li>
+      <li class="list-group-item"><a href="/update_student?id={{student.id}}">{{student.name}}</a><span class="pull-right"><a href="/delete_student?id={{student.id}}">Delete</a></span></li>
       {% endfor %}
     </ul>
 {% endblock %}
