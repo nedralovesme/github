@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block body_top %}
+{% endblock %}
+
+{% block body %}
+{% block blockheader %}
+{% endblock %}
+
+
+{% block actionblock %}
+<form action="/replacethisaction" method="POST">
+{% endblock %}
+
+{% block form %}
+<p>
+<label for="name">Name</label><br>
+<input type="text" name="name" value="{{student.name}}">
+<input type="hidden" name="id" value="{{student.id}}">
+</p>
+{% endblock %}
+
+{% block formsubmit %}
+<p>
+<button type="submit">Submit</button>
+</p>
+</form>
+{% endblock %}
+{% endblock %}

@@ -1,14 +1,16 @@
-{% extends "layout.html" %}
-{% block body %}
+{% extends "student_form.html" %}
+
+{% block blockheader %}
 <h1>Update Student</h1>
+{% endblock %}
+
+{% block actionblock %}
 <form action="/update_student_submit" method="POST">
-  <p>
-    <label for="name">Name</label><br>
-    <input type="text" name="name" value="{{student.name}}">
-    <input type="hidden" name="id" value="{{student.id}}">
-  </p>
-  <p>
-    <button type="submit">Edit Student</button>
-  </p>
+{% endblock %}
+
+{% block formsubmit %}
+<p>
+<button type="submit">Edit Student</button>
+</p>
 </form>
 {% endblock %}

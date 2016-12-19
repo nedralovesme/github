@@ -5,12 +5,6 @@ import config
 
 app = Flask("MyApp")
 
-@app.route("/debug")
-def debug(methods=["GET"]):
-    for student in Student.getObjects():
-        print student
-    return "pong"
-
 @app.route("/")
 def home(methods=["GET"]):
     list = Student.getObjects()
@@ -18,7 +12,7 @@ def home(methods=["GET"]):
 
 @app.route("/new_student")
 def new_student():
-    return  render_template("new_student.html")
+    return  render_template("new_student.html",student=Student())
 
 @app.route("/new_student_submit",methods=["POST","GET"])
 def new_student_submit():
@@ -48,7 +42,6 @@ def delete_student():
     student = Student(id)
     student.delete()
     return redirect("/")
-
 
 if __name__=="__main__":
     app.run(debug=True)
