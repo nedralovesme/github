@@ -5,17 +5,11 @@ class Student:
     def __init__(self,id=0):
         if(not type(id)==int):
             id=int(id)
-        conn = Database.getConnection()
-        cur = conn.cursor()
         query = "SELECT id,name FROM student where id=%d"%id
-        cur.execute(query)
-        result_set = cur.fetchone()
+        result_set = Database.getResult(query,True)
         self.id=id
         if not result_set is None:
             self.name=result_set[1]
-
-        cur.close()
-        conn.close()
         return
     def save(self):
         if self.id>0:
@@ -23,47 +17,27 @@ class Student:
         else:
             return self.insert()
     def insert(self):
-        conn = Database.getConnection()
-        cur = conn.cursor()
         query = ("insert into student (name) values (\"%s\")"%Database.escape(self.name))
-        # query = ("delete from student where id=%s" % id)
-        cur.execute(query)
-        conn.commit()
-        self.id=cur.lastrowid
-        conn.close()
+        self.id=Database.doQuery(query)
         return self.id
     def update(self):
-        conn = Database.getConnection()
-        cur = conn.cursor()
         query = "update student set name='%s' where id=%d"%(Database.escape(self.name),self.id)
         # query = ("delete from student where id=%s" % id)
-        cur.execute(query)
-        conn.commit()
-        conn.close()
-        return self.id
+        return Database.doQuery(query)
     def delete(self):
-        conn = Database.getConnection()
-        cur = conn.cursor()
         query = ("update student set deleted=1 where id=%d"%self.id)
-        # query = ("delete from student where id=%s" % id)
-        cur.execute(query)
-        conn.commit()
-        conn.close()
+        Database.doQuery(query)
         return True
     def __str__(self):
      return self.name
     @staticmethod
     def getObjects():
-        conn = Database.getConnection()
-        cur = conn.cursor()
         query = "SELECT id FROM student where deleted=0"
-        cur.execute(query)
-        result_set = cur.fetchall()
+        result_set = result_set = Database.getResult(query)
         students=[]
         for item in result_set:
             id = int(item[0])
             students.append(Student(id))
-        conn.close()
         return students
 
 class Database(object):
@@ -73,3 +47,25 @@ class Database(object):
     @staticmethod
     def escape(value):
         return value.replace("'","''")
+    @staticmethod
+    def getResult(query,getOne=False):
+        conn = Database.getConnection()
+        cur = conn.cursor()
+        cur.execute(query)
+        if getOne:
+            result_set = cur.fetchone()
+        else:
+            result_set = cur.fetchall()
+        cur.close()
+        conn.close()
+        return result_set
+    @staticmethod
+    def doQuery(query):
+        conn = Database.getConnection()
+        cur = conn.cursor()
+        cur.execute(query)
+        conn.commit()
+        lastId = cur.lastrowid
+        cur.close()
+        conn.close()
+        return lastId
