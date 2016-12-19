@@ -33,7 +33,7 @@ class Student:
     @staticmethod
     def getObjects():
         query = "SELECT id FROM student where deleted=0"
-        result_set = result_set = Database.getResult(query)
+        result_set = Database.getResult(query)
         students=[]
         for item in result_set:
             id = int(item[0])
