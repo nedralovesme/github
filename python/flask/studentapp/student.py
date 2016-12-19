@@ -17,14 +17,6 @@ class Student:
         cur.close()
         conn.close()
         return
-    def update(self):
-        conn = Database.getConnection()
-        cur = conn.cursor()
-        query = "update student set name='%s' where id=%d"%(self.name,self.id)
-        # query = ("delete from student where id=%s" % id)
-        cur.execute(query)
-        conn.commit()
-        return self.id
     def save(self):
         if self.id>0:
             return self.update()
@@ -33,11 +25,21 @@ class Student:
     def insert(self):
         conn = Database.getConnection()
         cur = conn.cursor()
-        query = ("insert into student (name) values (\"%s\")"%self.name)
+        query = ("insert into student (name) values (\"%s\")"%Database.escape(self.name))
         # query = ("delete from student where id=%s" % id)
         cur.execute(query)
         conn.commit()
         self.id=cur.lastrowid
+        conn.close()
+        return self.id
+    def update(self):
+        conn = Database.getConnection()
+        cur = conn.cursor()
+        query = "update student set name='%s' where id=%d"%(Database.escape(self.name),self.id)
+        # query = ("delete from student where id=%s" % id)
+        cur.execute(query)
+        conn.commit()
+        conn.close()
         return self.id
     def delete(self):
         conn = Database.getConnection()
@@ -46,6 +48,7 @@ class Student:
         # query = ("delete from student where id=%s" % id)
         cur.execute(query)
         conn.commit()
+        conn.close()
         return True
     def __str__(self):
      return self.name
@@ -60,9 +63,13 @@ class Student:
         for item in result_set:
             id = int(item[0])
             students.append(Student(id))
+        conn.close()
         return students
 
 class Database(object):
     @staticmethod
     def getConnection():
         return mysql.connector.connect(user=config.dbUser,password=config.dbPass,host=config.dbHost,database=config.dbName)
+    @staticmethod
+    def escape(value):
+        return value.replace("'","''")
