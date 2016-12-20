@@ -10,8 +10,8 @@ def test(methods=["GET"]):
     f = Friend(1)
     return f.name
 
-@app.route("/")
-def home(methods=["GET"]):
+@app.route("/",methods=["GET"])
+def home():
     list = Student.getObjects()
     return render_template("students.html",student_list=list,title="Student List")
 
