@@ -5,6 +5,11 @@ import config
 
 app = Flask("MyApp")
 
+@app.route("/test")
+def test(methods=["GET"]):
+    f = Friend(1)
+    return f.name
+
 @app.route("/")
 def home(methods=["GET"]):
     list = Student.getObjects()
