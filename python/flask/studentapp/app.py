@@ -1,4 +1,4 @@
-from flask import Flask,render_template, request,redirect
+from flask import Flask,render_template, request, redirect, url_for
 from student import *
 import config,os
 
@@ -20,7 +20,8 @@ def test(methods=["GET"]):
     # return html
 
     s = Student(1)
-    return s.name
+    return render_template("layout.html")
+    # return s.name
 
 @app.route("/",methods=["GET"])
 def home():
@@ -59,6 +60,23 @@ def delete_student():
     student = Student(id)
     student.delete()
     return redirect("/")
+
+@app.after_request
+def add_header(response):
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
+    response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
+    response.headers['Cache-Control'] = 'public, max-age=0'
+    return response
+
+
+@app.errorhandler(404)
+def page_not_found(error):
+    """Custom 404 page."""
+    return render_template('404.html'), 404
+
 
 if __name__=="__main__":
     app.run(debug=True)

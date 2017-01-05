@@ -1,4 +1,4 @@
-import mysql.connector
+#import mysql.connector
 import pg
 import config
 
@@ -100,7 +100,13 @@ class Database(object):
             # tmp = result.getresult()
             # print tmp
             # print tmp[0][0]
-            lastId = result.getresult()[0][0]
-            print "lastId=%d"%lastId
+            print "result",type(result)
+            lastId=0
+            if type(result)=='pg.Query':
+                r = result.getresult()
+
+                # if(type(result.getresult()))
+                if len(r)>0 and len(r[0])>0:
+                    lastId = result.getresult()[0][0]
         conn.close()
         return lastId
