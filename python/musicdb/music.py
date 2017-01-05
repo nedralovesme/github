@@ -1,3 +1,9 @@
+#run with python music.py "artist name in quotes"
+#check with:
+    # select * from artist
+    # left join album on album.artist_id=artist.id
+    # left join track on track.album_id=album.id
+
 import json
 import pycurl
 import StringIO
@@ -6,7 +12,7 @@ import mysql.connector
 import sys
 
 dbUser="root"
-dbPass=""
+dbPass="helix"
 dbHost="127.0.0.1"
 dbName="music"
 #I am using this API:
@@ -169,7 +175,7 @@ artist.save()
 for album in albums["album"]:
     # print type(album)
     # print album
-    print album["strAlbum"]
+    print "..................." + album["strAlbum"] + "................"
     print album["intYearReleased"]
     print album["idAlbum"]
     a = Album()
