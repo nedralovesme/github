@@ -13,7 +13,7 @@ def debug(line):
 	ip=request.remote_addr
 
 	timestamp =  time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
-	target.write("[%s][%s] %s"%(timestamp,ip, line))
+	target.write("\n[%s][%s] %s"%(timestamp,ip, line))
 	target.close()
 
 
@@ -26,6 +26,8 @@ def test(methods=["GET"]):
     html += "DBUSER:%s<br />"%config.DBUSER
     html += "DBNAME:%s<br />"%config.DBNAME
     html += "DBPASS:%s<br />"%config.DBPASS
+    debug("test")
+    debug("test")
     debug("test")
     # return html
 
