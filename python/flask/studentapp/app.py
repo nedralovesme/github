@@ -7,6 +7,16 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 
+def debug(line):
+	import time
+	target = open("debug.log", "w")
+	ip=request.remote_addr
+
+	timestamp =  time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
+	target.write("[%s][%s] %s"%(timestamp,ip, line))
+	target.close()
+
+
 app = Flask("MyApp")
 
 @app.route("/test")
@@ -16,7 +26,7 @@ def test(methods=["GET"]):
     html += "DBUSER:%s<br />"%config.DBUSER
     html += "DBNAME:%s<br />"%config.DBNAME
     html += "DBPASS:%s<br />"%config.DBPASS
-
+    debug("test")
     # return html
 
     s = Student(1)
