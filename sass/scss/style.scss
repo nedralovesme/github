@@ -1,0 +1,54 @@
+@import 'colors';
+@import 'mixins';
+
+$ff: Helvetica,sans-serif;
+
+div {
+    font-family: $ff;
+}
+
+#box{
+    @include myradius(10px);
+    background-color: $darkGray;
+    width: 100px;
+    height: 100px;
+}
+p {
+    background-color: $darkGray;
+}
+
+.nav {
+    ul{background-color: red;}
+    li{background-color: green;}
+    a{background-color: blue;}
+}
+
+.message{
+    border:1px solid black;
+    padding: 10px;
+    width:120px;
+}
+
+.warning{
+    @extend .message;
+    background-color:orange;
+}
+
+
+$colour1: rgb(255,255,255); // white
+$colour2: rgb(255,0,0); // red
+$colour3: rgb(135,206,250); // sky blue
+$colour4: rgb(255,255,0);   // yellow
+
+$colors: $colour1, $colour2, $colour3, $colour4;
+
+@for $i from 1 through length($colors) {
+    #cp#{$i} {
+        background-color: rgba(nth($colors, $i), 0.6);
+
+        &:hover {
+            background-color: rgba(nth($colors, $i), 1);
+            cursor: pointer;
+        }
+    }
+}
