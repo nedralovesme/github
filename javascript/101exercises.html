@@ -128,7 +128,7 @@
             console.log("printNumbers version 1:");
             printNumbers(1,10);
             function printNumbers(start,end){
-                for(i=start;i<=end;i++){
+                for(var i=start;i<=end;i++){
                     console.log(i);
                 }
             }
@@ -295,35 +295,40 @@
             > leetspeak('Leet')
             l337
             */
+            function toLeet(c){
+                var r="";
+                switch(c.toLowerCase()){
+                    case 'a':
+                        r='4';
+                        break;
+                    case 'e':
+                        r='3';
+                        break;
+                    case 'g':
+                        r='6';
+                        break;
+                    case 'i':
+                        r='1';
+                        break;
+                    case 'o':
+                        r='0';
+                        break;
+                    case 's':
+                        r='5';
+                        break;
+                    case 't':
+                        r='7';
+                        break;
+                    default:
+                        r=c;
+                }
+                return r
+            }
             function leetspeak(s){
                 r="";
                 for (var i = 0, len = s.length; i < len; i++) {
                     c=s.charAt(i);
-                    switch(c.toLowerCase()){
-                        case 'a':
-                            r+='4';
-                            break;
-                        case 'e':
-                            r+='3';
-                            break;
-                        case 'g':
-                            r+='6';
-                            break;
-                        case 'i':
-                            r+='1';
-                            break;
-                        case 'o':
-                            r+='0';
-                            break;
-                        case 's':
-                            r+='5';
-                            break;
-                        case 't':
-                            r+='7';
-                            break;
-                        default:
-                            r+=c;
-                    }
+                    r+=toLeet(c);
                 }
                 return r;
             }
@@ -366,7 +371,7 @@
             }
             function longLongVowels(s){
                 var r="";
-                var lastChar
+                var lastChar="";
                 for (var i = 0, len = s.length; i < len; i++) {
                     var c=s.charAt(i);
                     if(lastChar==c && isVowel(c)){
