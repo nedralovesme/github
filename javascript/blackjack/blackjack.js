@@ -122,6 +122,9 @@ function Game() {
     $("#player-points").text("");
     $("#messages").text("");
     var deal = function() {
+        $("#deal-button").prop("disabled", true);
+        $("#hit-button").prop("disabled", false);
+        $("#stand-button").prop("disabled", false);
         playerHand.addCard(deck.getCard());
         dealerHand.addCard(deck.getCard());
         playerHand.addCard(deck.getCard());
@@ -134,9 +137,6 @@ function Game() {
             message = "Dealer Wins!";
             endGame();
         }
-        $("#deal-button").prop("disabled", true);
-        $("#hit-button").prop("disabled", false);
-        $("#stand-button").prop("disabled", false);
     }
     var playerHit = function() {
         playerHand.addCard(deck.getCard());
