@@ -151,10 +151,10 @@ function Game() {
         while (dealerHand.getScore() <= 16) {
             dealerHand.addCard(deck.getCard());
         }
-        if (dealerHand.getScore() > playerHand.getScore()) {
-            message = "Dealer wins";
-        } else if (dealerHand.getScore() > 21) {
+        if (dealerHand.getScore() > 21) {
             message = "Dealer busts";
+        } else if (dealerHand.getScore() > playerHand.getScore()) {
+            message = "Dealer wins";
         } else if (dealerHand.getScore() == playerHand.getScore()) {
             message = "Push";
         } else {
