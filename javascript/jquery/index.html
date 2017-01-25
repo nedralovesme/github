@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>jQuery 101</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    </head>
+    <body>
+        <div class="">
+            <h2>a jQuery Example</h2>
+            <ul class="list">
+                <li><a href="https://www.duckduckgo.com">DuckDuckGo</a></li>
+                <li><a href="#">Chad's Website</a></li>
+                <li><a href="#">DigitalCrafts</a></li>
+            </ul>
+            <button id="the-button" name="button">Click Me</button>
+        </div>
+        <div class="">
+            <h2>Attributes</h2>
+            <img src="lolcat1.jpg" width="100" alt="">
+        </div>
+        <div class="">
+            <a href="http://api.jquery.com/">jquery docs</a>
+        </div>
+    </body>
+    <script type="text/javascript">
+        $("document").ready(function(){
+            $("#the-button").click(function(event){
+                console.log(event);
+                console.log("clicked button");
+                console.log(this);
+                console.log($(this));
+            });
+            $("a").click(function(event){
+                event.preventDefault();
+            });
+        });
+    </script>
+</html>
