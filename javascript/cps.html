@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+
+    </body>
+</html>
+<script type="text/javascript">
+Person  = function (name){
+    this.name=name;
+    this.call = function(whom){
+        console.log(this.name + " called " + whom.name);
+    }
+}
+
+janice = new Person("janice");
+bill = new Person("bill");
+jill = new Person("jill");
+
+callJanice  = function(person){
+    person.call(janice)
+}
+
+function textBill(from,thenwhat){
+    //send the text
+    // var message = from.text(to)
+    // to.read(message)
+    console.log(from.name + ' texted bill');
+    function textJill(from,thenwhat){
+        //send the text
+        // var message = from.text(to)
+        // to.read(message)
+        console.log(from.name + ' texted jl');
+
+
+        jillCallBill  = function(thenwhat){
+            jill.call(bill);
+            thenwhat(bill); //bill call janice
+        }
+        jillCallBill(thenwhat);
+        // textJill(from,thenwhat)
+
+    }
+
+    textJill(bill,thenwhat)
+
+}
+
+textBill(janice,callJanice)
+
+</script>
