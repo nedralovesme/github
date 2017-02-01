@@ -10,3 +10,5 @@ node/expressdemo/node_modules
 node/hello/node_modules
 node/middleware2/node_modules
 node/sessiondemo/node_modules
+
+node/express/sessiondemo/v3/node_modules
