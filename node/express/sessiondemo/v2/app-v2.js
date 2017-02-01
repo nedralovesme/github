@@ -38,11 +38,14 @@ function auth(req, res, next) {
 app.get('/', auth, function (req, res, next) {
   var sess = req.session;
   if (sess.views) {
-    sess.views++
+    sess.views++;
+    console.log("session:");
+    console.log(sess);
     res.setHeader('Content-Type', 'text/html')
     res.write('<p>views: ' + sess.views + '</p>')
     res.write('<p>expires in: ' + (sess.cookie.maxAge / 1000) + 's</p>')
-    res.write('<p>user: ' + sess.user + '</p>')
+    res.write('<p>user: ' + sess.username + '</p>')
+    res.write('<p>token: ' + sess.token + '</p>')
     res.end()
   } else {
     sess.views = 1
@@ -61,6 +64,9 @@ app.post('/login', function(req, res) {
     // using a hardcoded token, see above
     var token=uniqid();
     req.session.username = username;
+    req.session.token = token;
+    console.log("session is going to be set to:")
+    console.log(req.session);
     res.json({
       username: username,
       token: token
