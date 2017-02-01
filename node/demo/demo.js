@@ -1,3 +1,6 @@
+var async = require('async');
+var fs = require('fs');
+
 // function Deck(){
 //     this.cards = this.buildDeck();
 // }
@@ -25,3 +28,14 @@ function doesNothing(name){
     console.log(name);
 }
 doesNothing(name);
+
+
+try {
+    var buffer = fs.readFileSync('a-file.txt');
+    console.log(buffer.toString());
+} catch(error){
+    console.log("error caught");
+}
+
+
+console.log(process.argv);

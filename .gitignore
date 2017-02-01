@@ -1,2 +1,12 @@
 
 python/flask/studentapp/debug.log
+
+node/cookiedemo/node_modules
+node/demo/node_modules
+node/express/sessiondemo/v1/node_modules
+node/express/sessiondemo/v2/node_modules
+
+node/expressdemo/node_modules
+node/hello/node_modules
+node/middleware2/node_modules
+node/sessiondemo/node_modules
