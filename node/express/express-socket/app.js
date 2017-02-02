@@ -20,8 +20,7 @@ io.on('connection',function(socket){
 });
 io.emit('welcome','welcome to the demo');
 
-app.get("/",function(req,res){
-
+app.get("/hi",function(req,res){
     res.send('hi');
 });
 

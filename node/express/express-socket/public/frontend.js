@@ -6,3 +6,7 @@ socket.on('join',function(data){
     console.log("user joined:");
     console.log(data);
 });
+socket.on('welcome',function(data){
+    console.log("user welcome:");
+    console.log(data);
+});
