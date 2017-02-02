@@ -12,3 +12,5 @@ node/middleware2/node_modules
 node/sessiondemo/node_modules
 
 node/express/sessiondemo/v3/node_modules
+node/express/express-socket/node_modules
+node/socketdemo/node_modules

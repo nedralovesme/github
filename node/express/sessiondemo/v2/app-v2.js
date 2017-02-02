@@ -24,7 +24,7 @@ app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 } }))
 function auth(req, res, next) {
   // verify the authentication token
   var sess = req.session
-  if (req.session.username) {
+  if (sess.username) {
     next();
   } else {
     res.status(401);
