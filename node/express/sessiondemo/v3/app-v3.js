@@ -1,116 +1,57 @@
-
-//http://passportjs.org/docs/authenticate
-
-const express = require("express");
+const express=require("express");
 var session = require('express-session');
-
-
-function User() {
-    var username = "";
-    var findone = function(args, done) {
-        //grab the username out of the DB
-        this.username = args.username;
-        console.log("going to login the user");
-        done("", this);
-    }
-    var validPassword = function(password) {
-        return true;
-    }
-    return {
-        findone: findone,
-        validPassword: validPassword
-    }
-}
-
-var passport = require('passport'),
-    LocalStrategy = require('passport-local').Strategy;
-
-passport.use(new LocalStrategy(
-    function(username, password, done) {
-        console.log(username, password);
-        (User()).findone({
-            username: username
-        }, function(err, user) {
-            console.log("user is");
-            console.log(user);
-            if (err) {
-                return done(err);
-            }
-            if (!user) {
-                return done(null, false, {
-                    message: 'Incorrect username.'
-                });
-            }
-            if (!user.validPassword(password)) {
-                return done(null, false, {
-                    message: 'Incorrect password.'
-                });
-            }
-            console.log("calling the done()");
-            return done(null, user);
-        });
-    }
-));
+var uniqid = require('uniqid');
+const bcrypt =  require('bcrypt');
+const saltRounds = 10;
 
 var app = express();
-// app.use(require('express-session')({
-//   secret: 'keyboard cat',
-//   resave: true,
-//   saveUninitialized: true
-// }));
-
-// Use the session middleware
-app.use(session({
-    secret: 'keyboard cat',
-    cookie: {
-        maxAge: 60000
-    }
-}))
-
-passport.serializeUser(function(user, done) {
-    done(null, user);
-});
-
-passport.deserializeUser(function(user, done) {
-    done(null, user);
-});
-
-const bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(require('cookie-parser')());
-app.use(passport.initialize());
-app.use(passport.session());
-
-if (app.get('env') === 'production') {
-    app.set('trust proxy', 1) // trust first proxy
-    sess.cookie.secure = true // serve secure cookies
+var sess = {
+  secret: 'keyboard cat',
+  cookie: { maxAge: 60000 }
 }
 
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+app.use(bodyParser.json());
+// app.use(express.cookieParser());
+
+
+if (app.get('env') === 'production') {
+  app.set('trust proxy', 1) // trust first proxy
+  sess.cookie.secure = true // serve secure cookies
+}
+
+// use cookie for middleware
+app.use(cookieParser('your secret here'));
+
+// Use the session middleware
+app.use(session(sess));
 
 //auth function
-// function auth(req, res, next) {
-//     // verify the authentication token
-//     var sess = req.session
-//     if (req.session.username) {
-//         next();
-//     } else {
-//         res.status(401);
-//         res.json({
-//             error: 'You are not logged in lol'
-//         });
-//     }
-// }
-
+function auth(req, res, next) {
+    console.log("customTHIng:",req.cookies);
+  // verify the authentication token
+  var sess = req.session;
+  if (sess.username) {
+    next();
+  } else {
+    res.status(401);
+    res.json({ error: 'You are not logged in lol' });
+  }
+}
 
 // Access the session as req.session
-app.get('/', passport.authenticate('local'), function (req, res) {
+app.get('/', auth, function (req, res, next) {
   var sess = req.session;
   if (sess.views) {
-    sess.views++
+    sess.views++;
+    console.log("session:");
+    console.log(sess);
     res.setHeader('Content-Type', 'text/html')
     res.write('<p>views: ' + sess.views + '</p>')
     res.write('<p>expires in: ' + (sess.cookie.maxAge / 1000) + 's</p>')
-    res.write('<p>user: ' + sess.user + '</p>')
+    res.write('<p>user: ' + sess.username + '</p>')
+    res.write('<p>token: ' + sess.token + '</p>')
     res.end()
   } else {
     sess.views = 1
@@ -118,29 +59,87 @@ app.get('/', passport.authenticate('local'), function (req, res) {
   }
 });
 
+app.post('/login', function(req, res) {
+  var username = req.body.username;
+  var password = req.body.password;
 
-app.post('/login',
-    passport.authenticate('local'),
-    function(req, res) {
-        // If this function gets called, authentication was successful.
-        // `req.user` contains the authenticated user.
-        res.redirect('/users/' + req.user.username);
-    });
 
-app.get("/logout", function(req, res) {
+  //user = larry, password='open'
+  // password='open';
+  // bcrypt.genSalt(saltRounds, function(err, salt) {
+  //    bcrypt.hash(password, salt, function(err, hash) {
+  //    // Store hash in your password DB.
+  //    console.log(hash);
+  //    //hash = '$2a$10$AwK0fK6ZeppiJikMHyVj4.oHiqysk6cC9uUFdLlAnye3l9qNDaAsC'
+  //    });
+  //   });
+  console.log("password:",password);
+  bcrypt.compare(password, '$2a$10$AwK0fK6ZeppiJikMHyVj4.oHiqysk6cC9uUFdLlAnye3l9qNDaAsC', function(err, success) {
+      console.log("success",success);
+      //res is true|false
+      if(success){
+          var token=uniqid();
+          req.session.username = username;
+          req.session.token = token;
+
+          //SET COOKIE TOKEN:
+          let options = {
+              maxAge: 1000 * 60 * 15, // would expire after 15 minutes
+              httpOnly: true, // The cookie only accessible by the web server
+              signed: true // Indicates if the cookie should be signed
+          }
+
+          // Set cookie
+          res.cookie('session', token, options);
+
+          console.log("session is going to be set to:")
+          console.log(req.session);
+          res.json({
+            username: username,
+            token: token
+          });
+      } else {
+          res.status(401);
+          res.json({
+            error: 'Login incorrect'
+          });
+      }
+  });
+
+});
+
+app.get("/logout",function(req,res){
     req.session.destroy();
     res.redirect("/");
 });
 
-app.get("/users/:username", function(req, res) {
-    console.log("going to show the user details");
-    var username = req.params.username;
-    console.log(req.params.username);
-    console.log("username:" + username);
-    res.status(200);
-    res.send('Welcome ' + username);
+app.get("/logintest",function(req,res){
+    console.log("...............................logintest");
+    console.log(req.session);
+    console.log(req.cookies);
+    if (req.session.token == req.cookies.session){
+        res.send("You are logged in");
+    } else {
+        res.send("You are NOT logged in");
+    }
 });
 
-app.listen(3000, function() {
+app.get('/cookiedemo', function(req,res){
+    // read cookies
+    console.log(req.cookies)
+
+    let options = {
+        maxAge: 1000 * 60 * 15, // would expire after 15 minutes
+        httpOnly: true, // The cookie only accessible by the web server
+        signed: true // Indicates if the cookie should be signed
+    }
+
+    // Set cookie
+    res.cookie('customTHIng', 'secret value', options) // options is optional
+    res.send("Done with cookie stuff");
+});
+
+
+app.listen(3000,function(){
     console.log("running...");
 })
