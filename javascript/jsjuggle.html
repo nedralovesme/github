@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<!-- Jquery -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+	<!-- Lets make a simple snake game -->
+	<canvas id="canvas" width="600" height="600"></canvas>
+
+</body>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var canvas = $("#canvas")[0];
+		var ctx = canvas.getContext("2d");
+		const w = $("#canvas").width();
+		const h = $("#canvas").height();
+		const ballRadius = 30;
+		const ballSpeedChangeTimeout = 100;//in milliseconds
+		const ballSpeedIncrement = .5;
+		const ballMaxSpeed = 2.2;
+		const addBallTimeout = 15000;//add ball every 15 seconds
+		var score = 0;
+		var lostBalls = 0;
+		var gameOver = false;
+		var makeBall = function(){
+			startX = ballRadius * 1.2 + ((w-(2*ballRadius))*Math.random());
+			startY = 0.333 * h * Math.random()+ballRadius; //start near top third
+			return {
+				x: startX,
+				y: startY,
+				radius: ballRadius,
+				direction:1,
+				speed:1,
+				timeout:ballSpeedChangeTimeout,
+				lastChange:new Date(),
+				color:'blue',
+				bounces:0,
+				hidden:false
+			};
+		}
+
+		//TODO: Make an array of balls
+		var ball = makeBall();
+		var gameStart = new Date();
+		var lastBallAdded = new Date();
+
+		function drawBackground(){
+			ctx.fillStyle = "gray";
+			ctx.fillRect(0, 0, w, h);
+			ctx.strokeStyle = "black";
+			ctx.strokeRect(0, 0, w, h);
+		}
+
+		function moveBall(ball){
+			ball.y += (ball.direction * ball.speed);
+
+			var now = Date();
+			//if ball hit the top
+			if( (ball.y-ball.radius)<0){
+				ball.direction=Math.abs(ball.speed);
+			}
+			// if the ball hit the bottom
+			if( (ball.y+ball.radius)>h){
+				ball.direction=-Math.abs(ball.speed);
+				ball.bounces++;
+				//TODO
+				//If the ball bounce is 1, make purple
+				//If the ball bounce is 2, make red
+				if (ball.bounces==3){
+					lostBalls++;
+					ball.hidden=true;
+					console.log("Lost Balls:",lostBalls);
+				}
+
+			}
+
+			var now = new Date();
+	        //increase the ball speed
+			//TODO: Limit the max speed of the ball
+	        if(now-ball.lastChange >= ball.timeout){
+	            ball.speed +=ballSpeedIncrement;
+				ball.timeout += ballSpeedIncrement;//gradually increase the time between speed change
+	            ball.lastChange = now;
+	        }
+		}
+
+		function drawBall(ball) {
+			if(!ball.hidden){
+				ctx.beginPath();
+				ctx.fillStyle = ball.color;
+				ctx.ellipse(ball.x, ball.y, ball.radius, ball.radius, 0, 0, Math.PI * 2);
+				ctx.fill();
+			}
+		}
+
+		function ballClicked(x, y, ball) {
+			if(Math.pow((x - ball.x), 2) + Math.pow((y - ball.y), 2) < Math.pow(ball.radius*1.4, 2)){
+				//ball was hit, move it up
+				if(ball.direction>0){
+					ball.direction=-1; //move up
+					score++;
+					console.log("Score: ",score);
+				}
+				return true;
+			}
+			return false;
+		}
+
+		$('#canvas').click(function(e) {
+				var x = e.clientX,
+					y = e.clientY;
+				balls.forEach(function(ball) {
+					ballClicked(x, y, ball);
+				});
+		});
+
+		function draw() {
+			now = new Date();
+			drawBackground();
+			//TODO: If enough time has passed, add a new ball
+				drawBall(ball);
+				moveBall(ball);
+
+			if(lostBalls<3) {
+				requestAnimationFrame(draw);
+			} else {
+				//TODO, show message that gave is over, with score
+
+			}
+		}
+		draw();
+
+	})
+</script>
+
+</html>
