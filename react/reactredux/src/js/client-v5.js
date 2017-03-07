@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { applyMiddleware,createStore, combineReducers } from "redux";
+import { Provider,connect } from "react-redux";
 import TodoApp from "./components/TodoApp";
 
 //plugin middleware
@@ -34,6 +35,10 @@ const userReducer = function(state={user:{}},action){
             state = {...state, name:action.payload};
             break;
         }
+        case "READ_USER": {
+            state = {...state, name:action.payload.name, age:action.payload.age};
+            break;
+        }
     }
     return state;//must return the state
 }
@@ -65,4 +70,7 @@ store.dispatch((dispatch) => {
             });
         //done with async
 })
-ReactDOM.render(<TodoApp />, app);
+
+//WRAP THE main component in a Provider
+
+ReactDOM.render(<Provider store={store}><TodoApp /></Provider>, app);

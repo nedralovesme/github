@@ -1,15 +1,15 @@
 import React from "react";
 import TodoList from "./TodoList";
-//import { connect } from "react-redux";
-//import * as user from "../actions/userActions";
+import { connect } from "react-redux";
+import * as user from "../actions/userActions";
 
 // user.readUser();
-// @connect((store)=>{
-//     //the return becomes props
-//     return {
-//         user:store.user
-//     }
-// })
+@connect((store)=>{
+    //the return becomes props
+    return {
+        user:store.user
+    }
+})
 export default class TodoApp extends React.Component {
   constructor(props) {
     super(props);
@@ -18,10 +18,10 @@ export default class TodoApp extends React.Component {
     this.state = {items: [], text: ''};
   }
 
-  // componentWillMount(){
-  //     console.log("Mounting:",this.props.user);
-  //     this.props.dispatch(user.readUser());
-  // }
+  componentWillMount(){
+      console.log("Mounting:",this.props.user);
+      this.props.dispatch(user.readUser());
+  }
 
   render() {
     return (
@@ -33,10 +33,10 @@ export default class TodoApp extends React.Component {
           <input onChange={this.handleChange} value={this.state.text} />
           <button>{'Add #' + (this.state.items.length + 1)}</button>
         </form>
-
+        <button onClick={user.readUser}>Read User</button>
       </div>
     );
-    //<button onClick={user.readUser}>Read User</button>
+
   }
 
   handleChange(e) {

@@ -1,59 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { applyMiddleware,createStore, combineReducers } from "redux";
-import { Provider,connect } from "react-redux";
 import TodoApp from "./components/TodoApp";
-
-//plugin middleware
-import logger from "redux-logger";
-
-//read https://www.npmjs.com/package/redux-thunk
-//allows you to delay actions
-import thunk from "redux-thunk";
+import { Provider,connect } from "react-redux";
+import store from "./store";
 
 //AJAX library
 import axios from "axios";
-
+//import reducer from "./reducers"; //should get the export default
 const app = document.getElementById('app');
 
-//state is the current state
-//action must have a type, and any value for payload
-const todoReducer = function(state={todos:[]},action){
-    var newState = Object.assign(state);
-    //action.type is required!
-    if(action.type=="ADD_TODO"){
-        console.log(action);
-        var todos = state.todos.concat(action.payload.text);
-        newState = { ...state, todos:todos };
-    }
-    return newState; //returns the new value of the state
-}
 
-const userReducer = function(state={user:{}},action){
-    switch(action.type) {
-        case "CHANGE_NAME": {
-            state = {...state, name:action.payload};
-            break;
-        }
-        case "READ_USER": {
-            state = {...state, name:action.payload.name, age:action.payload.age};
-            break;
-        }
-    }
-    return state;//must return the state
-}
-
-const reducers = combineReducers({
-    user:userReducer,todos:todoReducer
-});
-
-//second argument is the starting state
-const store = createStore(reducers, {},applyMiddleware(thunk, logger()));
-store.subscribe(()=> {
-        console.log("store changed:");
-        console.log(store.getState());
-    }
-);
 store.dispatch({type:"ADD_TODO",payload:{text:"something"}});
 store.dispatch({type:"ADD_TODO",payload:{text:"something else"}});
 
@@ -70,7 +26,4 @@ store.dispatch((dispatch) => {
             });
         //done with async
 })
-
-//WRAP THE main component in a Provider
-
 ReactDOM.render(<Provider store={store}><TodoApp /></Provider>, app);
