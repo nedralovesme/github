@@ -1,0 +1,28 @@
+#table {
+    background-color: #97e343;
+    width: 600px;
+    height: 250px;
+    padding:100px 20px 40px 20px;
+    border-style: solid;
+    border-color: #000000;
+    border-width: 3px;
+    border-radius: 25px;
+
+}
+#messages{
+  height:40px;
+  margin-top:-60px;
+  position: absolute;
+}
+.hand {
+  background-color: #9de74d;
+  height:100px;
+  padding-top:10px;
+}
+.hand img{
+  height:80px;
+  padding-left: 5px;
+}
+.buttons{
+  text-align: center;
+}

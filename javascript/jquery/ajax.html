@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>jQuery 101</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <form id="search-form" class="" action="index.html" method="post">
+        <input id="search" type="text" name="search" value="">
+        <button type="submit" name="button">Search</button>
+
+    </form>
+</body>
+<script type="text/javascript">
+    $("document").ready(function() {
+        $("#search-form").submit(function(event) {
+
+            event.preventDefault();
+            var gotData = function(html) {
+                console.log(html);
+            }
+            var data = {
+                search:$("#search").val(),
+                "more":"data",
+                "some other":"dsdfasdfasd"
+            }
+            $.post("results.json",data, gotData);
+            console.log("i am here");
+        });
+    });
+
+    setTimeout(function(){console.log("5 seconds later")},0000);
+    console.log("called setTimeout");
+    return "<img src=\"" +"path to my file.png" + "\" />";
+    return "<img src=\"path to my file.png\" />";
+    return "<img src='path to my file.png' />";
+</script>
+
+</html>

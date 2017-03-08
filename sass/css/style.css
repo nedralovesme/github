@@ -1,0 +1,52 @@
+div {
+  font-family: Helvetica, sans-serif; }
+
+#box {
+  border-radius: 10px;
+  background-color: #cacaca;
+  width: 100px;
+  height: 100px; }
+
+p {
+  background-color: #cacaca; }
+
+.nav ul {
+  background-color: red; }
+.nav li {
+  background-color: green; }
+.nav a {
+  background-color: blue; }
+
+.message, .warning {
+  border: 1px solid black;
+  padding: 10px;
+  width: 120px; }
+
+.warning {
+  background-color: orange; }
+
+#cp1 {
+  background-color: rgba(255, 255, 255, 0.6); }
+  #cp1:hover {
+    background-color: white;
+    cursor: pointer; }
+
+#cp2 {
+  background-color: rgba(255, 0, 0, 0.6); }
+  #cp2:hover {
+    background-color: red;
+    cursor: pointer; }
+
+#cp3 {
+  background-color: rgba(135, 206, 250, 0.6); }
+  #cp3:hover {
+    background-color: lightskyblue;
+    cursor: pointer; }
+
+#cp4 {
+  background-color: rgba(255, 255, 0, 0.6); }
+  #cp4:hover {
+    background-color: yellow;
+    cursor: pointer; }
+
+/*# sourceMappingURL=style.css.map */
